@@ -1,31 +1,57 @@
 import React, {Component} from "react";
 import "./Switch.css";
+import Buttons from "./Buttons";
+import Header from "./Header";
+import Input from "./Input";
 
 class Switch extends Component {
-    render() {
-        let text = <h1>Napis do zmiany</h1>;
-        
-        changeColor = (action) => {
 
-            if (action === "redA") {
-                text.cssClass = "red";
-                console.log("dupa");
-            } else if (action === "greenA") {
-                text.cssClass = "green";
-            } else if (action === "blueA") {
-                text.cssClass = "blue";
-            }
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            color: this.props.initValue,
+            text: "Siema",
         };
+    }
+
+    changeColor = (action) => {
+
+        this.setState(() => {
+
+            let textCurrColor; 
+            
+            if (action === "redColor") {
+                textCurrColor = "red"
+            } else if (action === "greenColor") {
+                textCurrColor = "green"
+            } else if (action === "blueColor") {
+                textCurrColor = "blue"
+            }
+
+            return ({
+                color: textCurrColor,
+            }) 
+        });
+        
+    };
+
+    changeText = (event) => {
+        this.setState({text: event.target.text})
+    }
+
+    render() {      
 
         return (
-            <header>
                 <div className="ButtonsPanel">
-                    {text}
-                    <button onClick={() => {changeColor("redA")}}>red</button>
-                    <button onClick={this.changeValue}>green</button>
-                    <button onClick={this.changeValue}>blue</button>
+                    {/* <h1 className={this.state.color}>Tekst</h1> */}
+                    {/* <button onClick={() => {this.changeColor("redColor")}}>red</button>
+                    <button onClick={() => {this.changeColor("greenColor")}}>green</button>
+                    <button onClick={() => {this.changeColor("blueColor")}}>blue</button> */}
+                    <Header heading={this.state.color} inputValue={this.state.text} />
+                    <input onChange={this.changeText} value={this.state.text} type="text"/>
+                    <Buttons buttonsPanel={this.changeColor}/>
                 </div>
-            </header>
         )
     }
 }
